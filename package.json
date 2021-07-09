@@ -1,0 +1,21 @@
+{
+  "name": "snowpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "snowpack dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.3.2",
+    "snowpack": "^3.7.1"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.4.0",
+    "chart.js": "^3.4.1",
+    "moment": "^2.29.1"
+  }
+}
