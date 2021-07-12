@@ -1,11 +1,9 @@
+import moment from 'moment'
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
-import '/index.css'
-import { chartjsColorScheme } from './chartjsColorScheme'
-import './time.js'
+import 'chartjs-adapter-moment'
 
-console.log(chartjsColorScheme)
-const ctx = document.getElementById('myChart')
+const context = document.getElementById('chartTime')
 
 const axisTitleFontOptions = {
   weight: '600',
@@ -27,7 +25,6 @@ const axisMiscOptions = {
 const title = {
   display: true,
   text: 'Checkouts - 08.07.2021',
-  color: '#FFAB80',
   font: {
     weight: '700',
     size: 20,
@@ -37,7 +34,12 @@ const title = {
   },
 }
 const legend = {
-  display: false,
+  labels: {
+    font: {
+      weight: '500',
+      size: 18,
+    },
+  },
 }
 const line = {
   tension: 0.3,
@@ -47,7 +49,6 @@ const point = {
   pointStyle: 'circe',
   radius: 2, // set 0 to disable
 }
-
 const options = {
   animation: false,
   responsive: false,
@@ -58,13 +59,30 @@ const options = {
         text: 'Value',
         font: axisTitleFontOptions,
       },
+      beginAtZero: true,
+      ticks: {
+        stepSize: 1,
+      },
       ...axisMiscOptions,
     },
     x: {
       title: {
         display: true,
-        text: 'Store',
+        text: 'Time',
         font: axisTitleFontOptions,
+      },
+      stacked: true,
+      type: 'time',
+      ticks: {
+        source: 'data',
+      },
+      time: {
+        round: 'hour',
+        unit: 'hour',
+        stepSize: 6,
+        displayFormats: {
+          hour: 'HH:mm',
+        },
       },
       ...axisMiscOptions,
     },
@@ -82,33 +100,60 @@ const options = {
 const data = {
   datasets: [
     {
-      label: 'Chekouts',
-      categoryPercentage: 0.4,
-      backgroundColor: [],
-      data: [],
+      label: 'Ozon',
+      backgroundColor: '#7490F1B3',
+      borderColor: '#7490F1B3',
+      data: [
+        {
+          x: '2021-07-08T21:43:19.000Z',
+          y: 1,
+        },
+        {
+          x: '2021-07-09T01:43:19.000Z',
+          y: 1,
+        },
+        {
+          x: '2021-07-09T01:45:19.000Z',
+          y: 1,
+        },
+        {
+          x: '2021-07-09T01:46:19.000Z',
+          y: 1,
+        },
+        {
+          x: '2021-07-09T04:32:22.000Z',
+          y: 1,
+        },
+        {
+          x: '2021-07-09T05:43:19.000Z',
+          y: 1,
+        },
+        {
+          x: '2021-07-09T05:43:19.000Z',
+          y: 1,
+        },
+      ],
+    },
+    {
+      label: 'Nike RU',
+      backgroundColor: '#FF8095B3',
+      borderColor: '#FF8095B3',
+      data: [
+        {
+          x: '2021-07-09T01:00:00.000Z',
+          y: 2,
+        },
+        {
+          x: '2021-07-09T01:10:22.000Z',
+          y: 3,
+        },
+        {
+          x: '2021-07-09T09:43:20.000Z',
+          y: 4,
+        },
+      ],
     },
   ],
-}
-
-const incomingAraay = [
-  {
-    name: 'OZON',
-    value: 34,
-  },
-  {
-    name: 'NIKE_RU',
-    value: 23,
-  },
-]
-
-for (const incomingData of incomingAraay) {
-  const storeScheme = chartjsColorScheme[incomingData.name]
-  const dataset = data.datasets[0]
-  dataset.data.push({
-    x: storeScheme.name,
-    y: incomingData.value,
-  })
-  dataset.backgroundColor.push(storeScheme.color)
 }
 
 const image = new Image()
@@ -132,8 +177,8 @@ const bgTheme = {
 
 Chart.defaults.color = '#8F9296'
 
-const myChart = new Chart(ctx, {
-  type: 'bar',
+const myChart = new Chart(context, {
+  type: 'line',
   data,
   plugins: [bgTheme],
   options,
