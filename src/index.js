@@ -97,7 +97,7 @@ const incomingAraay = [
   },
   {
     name: 'NIKE_RU',
-    value: 23,
+    value: 12,
   },
 ]
 
@@ -118,11 +118,18 @@ const bgTheme = {
   beforeDraw: chart => {
     if (image.complete) {
       const ctx = chart.ctx
+      console.log(ctx)
       ctx.fillStyle = '#313336'
       ctx.fillRect(0, 0, chart.width, chart.height)
       const { top, left, width, height } = chart.chartArea
+      console.log(top)
+      console.log(left)
+      console.log(width)
+      console.log(height)
       const x = left + width / 2 - image.width / 2
       const y = top + height / 2 - image.height / 2
+      console.log('x:', x)
+      console.log('y:', y)
       ctx.drawImage(image, x, y)
     } else {
       image.onload = () => chart.draw()
@@ -131,6 +138,8 @@ const bgTheme = {
 }
 
 Chart.defaults.color = '#8F9296'
+
+console.log(data)
 
 const myChart = new Chart(ctx, {
   type: 'bar',
